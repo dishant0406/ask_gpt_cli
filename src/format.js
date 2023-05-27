@@ -1,34 +1,40 @@
+/**
+ * The function converts a string of markdown text into formatted text using regular expressions.
+ * @param mdString - The input string in Markdown format that needs to be converted to formatted text.
+ * @returns The function `convertMarkdownToFormattedText` returns a string that has been converted from
+ * Markdown syntax to a formatted text syntax.
+ */
 function convertMarkdownToFormattedText(mdString) {
-  // Headers
+
   mdString = mdString.replace(/(#{1,6})\s(.+)/g, function (_, hashes, content) {
     let level = hashes.length;
     return '\n' + ' '.repeat(level - 1) + content.toUpperCase() + '\n';
   });
 
-  // Newlines
+
   mdString = mdString.replace(/\n/g, '\n');
 
-  // Code blocks
+
   mdString = mdString.replace(/```([^`]+)```/g, function (_, content) {
     return '\n[CODE]\n' + content + '\n[/CODE]\n';
   });
 
-  // Inline code
+
   mdString = mdString.replace(/`([^`]+)`/g, function (_, content) {
     return '[CODE]' + content + '[/CODE]';
   });
 
-  // Links
+
   mdString = mdString.replace(/\[([^\]]+)\]\(([^\)]+)\)/g, function (_, text, url) {
     return text + ' (URL: ' + url + ')';
   });
 
-  // Bold text
+
   mdString = mdString.replace(/\*\*([^*]+)\*\*/g, function (_, content) {
     return content.toUpperCase();
   });
 
-  // Italic text
+
   mdString = mdString.replace(/\*([^*]+)\*/g, function (_, content) {
     return '_' + content + '_';
   });
